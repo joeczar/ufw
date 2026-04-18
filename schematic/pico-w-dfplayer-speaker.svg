@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="860" viewBox="0 0 1280 860">
+  <defs>
+    <style>
+      .bg { fill: #f4f1ea; }
+      .board { fill: #ffffff; stroke: #1f2937; stroke-width: 3; rx: 24; ry: 24; }
+      .title { font: 700 30px Arial, sans-serif; fill: #111827; }
+      .subtitle { font: 500 18px Arial, sans-serif; fill: #374151; }
+      .label { font: 700 20px Arial, sans-serif; fill: #111827; }
+      .pin { font: 600 17px Arial, sans-serif; fill: #1f2937; }
+      .note { font: 500 16px Arial, sans-serif; fill: #374151; }
+      .small { font: 500 14px Arial, sans-serif; fill: #4b5563; }
+      .power { stroke: #dc2626; stroke-width: 5; fill: none; }
+      .ground { stroke: #111827; stroke-width: 5; fill: none; }
+      .signalA { stroke: #2563eb; stroke-width: 5; fill: none; }
+      .signalB { stroke: #0891b2; stroke-width: 5; fill: none; }
+      .speaker { stroke: #16a34a; stroke-width: 5; fill: none; }
+      .dot-red { fill: #dc2626; }
+      .dot-blue { fill: #2563eb; }
+      .dot-cyan { fill: #0891b2; }
+      .dot-green { fill: #16a34a; }
+      .pinbox { fill: #f9fafb; stroke: #9ca3af; stroke-width: 2; rx: 10; ry: 10; }
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1280" height="860"/>
+
+  <text class="title" x="640" y="56" text-anchor="middle">Pico W to DFPlayer Pro to Test Speaker</text>
+  <text class="subtitle" x="640" y="90" text-anchor="middle">Recommended simple UART + single speaker wiring</text>
+
+  <rect class="board" x="90" y="150" width="420" height="520"/>
+  <text class="label" x="300" y="200" text-anchor="middle">Raspberry Pi Pico W</text>
+  <text class="small" x="300" y="228" text-anchor="middle">Using UART0 on GP0 / GP1</text>
+
+  <rect class="pinbox" x="120" y="270" width="170" height="56"/>
+  <text class="pin" x="135" y="305">GP0 / UART0 TX</text>
+  <text class="small" x="135" y="323">Physical pin 1</text>
+
+  <rect class="pinbox" x="120" y="350" width="170" height="56"/>
+  <text class="pin" x="135" y="385">GP1 / UART0 RX</text>
+  <text class="small" x="135" y="403">Physical pin 2</text>
+
+  <rect class="pinbox" x="120" y="430" width="170" height="56"/>
+  <text class="pin" x="135" y="465">VBUS</text>
+  <text class="small" x="135" y="483">Physical pin 40, USB 5 V</text>
+
+  <rect class="pinbox" x="120" y="510" width="170" height="56"/>
+  <text class="pin" x="135" y="545">GND</text>
+  <text class="small" x="135" y="563">Any Pico ground pin</text>
+
+  <rect class="board" x="760" y="150" width="420" height="520"/>
+  <text class="label" x="970" y="200" text-anchor="middle">DFRobot DFPlayer Pro</text>
+  <text class="small" x="970" y="228" text-anchor="middle">DFR0768</text>
+
+  <rect class="pinbox" x="980" y="270" width="170" height="56"/>
+  <text class="pin" x="995" y="305">RX</text>
+  <text class="small" x="995" y="323">UART input</text>
+
+  <rect class="pinbox" x="980" y="350" width="170" height="56"/>
+  <text class="pin" x="995" y="385">TX</text>
+  <text class="small" x="995" y="403">UART output</text>
+
+  <rect class="pinbox" x="980" y="430" width="170" height="56"/>
+  <text class="pin" x="995" y="465">VIN</text>
+  <text class="small" x="995" y="483">3.3 V to 5 V input</text>
+
+  <rect class="pinbox" x="980" y="510" width="170" height="56"/>
+  <text class="pin" x="995" y="545">GND</text>
+  <text class="small" x="995" y="563">Common ground</text>
+
+  <rect class="pinbox" x="790" y="310" width="150" height="56"/>
+  <text class="pin" x="805" y="345">L+</text>
+  <text class="small" x="805" y="363">Speaker out +</text>
+
+  <rect class="pinbox" x="790" y="390" width="150" height="56"/>
+  <text class="pin" x="805" y="425">L-</text>
+  <text class="small" x="805" y="443">Speaker out -</text>
+
+  <path class="signalA" d="M290 298 C440 298, 720 298, 980 298"/>
+  <circle class="dot-blue" cx="290" cy="298" r="8"/>
+  <circle class="dot-blue" cx="980" cy="298" r="8"/>
+
+  <path class="signalB" d="M290 378 C450 378, 710 378, 980 378"/>
+  <circle class="dot-cyan" cx="290" cy="378" r="8"/>
+  <circle class="dot-cyan" cx="980" cy="378" r="8"/>
+
+  <path class="power" d="M290 458 C460 458, 700 458, 980 458"/>
+  <circle class="dot-red" cx="290" cy="458" r="8"/>
+  <circle class="dot-red" cx="980" cy="458" r="8"/>
+
+  <path class="ground" d="M290 538 C460 538, 700 538, 980 538"/>
+  <circle class="dot-red" cx="290" cy="538" r="8"/>
+  <circle class="dot-red" cx="980" cy="538" r="8"/>
+
+  <path class="speaker" d="M940 338 C1010 338, 1070 338, 1130 330"/>
+  <path class="speaker" d="M940 418 C1010 418, 1070 418, 1130 430"/>
+  <circle class="dot-green" cx="940" cy="338" r="8"/>
+  <circle class="dot-green" cx="940" cy="418" r="8"/>
+
+  <g transform="translate(1110 305)">
+    <rect x="0" y="0" width="95" height="150" fill="#ffffff" stroke="#1f2937" stroke-width="3" rx="18" ry="18"/>
+    <text class="label" x="48" y="34" text-anchor="middle">Speaker</text>
+    <circle cx="48" cy="90" r="32" fill="none" stroke="#4b5563" stroke-width="4"/>
+    <circle cx="48" cy="90" r="8" fill="#4b5563"/>
+    <text class="small" x="-8" y="30">+</text>
+    <text class="small" x="-8" y="126">-</text>
+  </g>
+
+  <text class="note" x="640" y="742" text-anchor="middle">Wire Pico TX to DFPlayer RX, and Pico RX to DFPlayer TX.</text>
+  <text class="note" x="640" y="772" text-anchor="middle">For a raw speaker, connect across L+ and L-. Do not connect either side of the speaker to ground.</text>
+  <text class="note" x="640" y="802" text-anchor="middle">If you use an external amplified speaker instead, use DACL plus GND instead of the L+ / L- speaker output.</text>
+</svg>

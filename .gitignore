@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+
+# Arduino build output
+.arduino-build/
+build/
+*.elf
+*.hex
+*.bin
+*.map
+*.lst
+
+# VS Code local cache
+.vscode/ipch/
