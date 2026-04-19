@@ -72,7 +72,7 @@ Ufw/
       IFuckingHateMen.ino
 ```
 
-## Example Workflow For Your Friend
+## Example Workflow
 
 1. Install `Ufw` into the Arduino `libraries` folder.
 2. Open Arduino IDE.
