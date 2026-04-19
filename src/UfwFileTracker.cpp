@@ -3,14 +3,14 @@
 #include <ctype.h>
 #include <string.h>
 
-UfwFileTracker::UfwFileTracker() : seen_count_(0) {
+UfwFileTracker::UfwFileTracker() : seenCount_(0) {
   clear();
 }
 
 void UfwFileTracker::clear() {
-  seen_count_ = 0;
+  seenCount_ = 0;
   for (uint16_t i = 0; i < MAX_ENTRIES; ++i) {
-    seen_names_[i][0] = '\0';
+    seenNames_[i][0] = '\0';
   }
 }
 
@@ -36,8 +36,8 @@ bool UfwFileTracker::hasSeen(const char* normalizedName) const {
     return false;
   }
 
-  for (uint16_t i = 0; i < seen_count_; ++i) {
-    if (strcmp(seen_names_[i], normalizedName) == 0) {
+  for (uint16_t i = 0; i < seenCount_; ++i) {
+    if (strcmp(seenNames_[i], normalizedName) == 0) {
       return true;
     }
   }
@@ -46,16 +46,16 @@ bool UfwFileTracker::hasSeen(const char* normalizedName) const {
 
 bool UfwFileTracker::remember(const char* normalizedName) {
   if (normalizedName == nullptr || normalizedName[0] == '\0' ||
-      hasSeen(normalizedName) || seen_count_ >= MAX_ENTRIES) {
+      hasSeen(normalizedName) || seenCount_ >= MAX_ENTRIES) {
     return false;
   }
 
-  strncpy(seen_names_[seen_count_], normalizedName, MAX_NAME_LENGTH - 1);
-  seen_names_[seen_count_][MAX_NAME_LENGTH - 1] = '\0';
-  ++seen_count_;
+  strncpy(seenNames_[seenCount_], normalizedName, MAX_NAME_LENGTH - 1);
+  seenNames_[seenCount_][MAX_NAME_LENGTH - 1] = '\0';
+  ++seenCount_;
   return true;
 }
 
 uint16_t UfwFileTracker::count() const {
-  return seen_count_;
+  return seenCount_;
 }

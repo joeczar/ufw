@@ -65,43 +65,25 @@ void UfwLed::pulseBootPattern(uint8_t pulses, uint16_t onMs, uint16_t offMs) {
 
 void UfwLed::startFillSweep(uint16_t stepDelayMs, size_t maxLit,
                             uint8_t brightness) {
-  stopAnimation();
-  animationMode_ = kFillSweep;
-  sweepStep_ = 0;
-  maxLit_ = maxLit;
-  stepDelayMs_ = stepDelayMs;
-  brightness_ = brightness;
-  brightnessProfile_ = {nullptr, 0};
-  brightnessStep_ = 0;
-  lastStepMs_ = millis();
-  renderAnimationFrame();
+  startFillAnimation(stepDelayMs, maxLit, brightness, {nullptr, 0});
 }
 
 void UfwLed::startFillSweep(uint16_t stepDelayMs, size_t maxLit,
                             UfwBrightnessProfile brightnessProfile) {
-  stopAnimation();
-  animationMode_ = kFillSweep;
-  sweepStep_ = 0;
-  maxLit_ = maxLit;
-  stepDelayMs_ = stepDelayMs;
-  brightness_ = 255;
-  brightnessProfile_ = brightnessProfile;
-  brightnessStep_ = 0;
-  lastStepMs_ = millis();
-  renderAnimationFrame();
+  startFillAnimation(stepDelayMs, maxLit, 255, brightnessProfile);
 }
 
 void UfwLed::startFadeSweep(uint16_t frameDelayMs, size_t maxLit,
-                            uint8_t brightness, uint8_t brightnessStep) {
+                            uint8_t brightness, uint8_t fadeStep) {
   startWindowAnimation(kFadeSweep, frameDelayMs, maxLit, brightness,
-                       {nullptr, 0}, brightnessStep);
+                       {nullptr, 0}, fadeStep);
 }
 
 void UfwLed::startFadeSweep(uint16_t frameDelayMs, size_t maxLit,
                             UfwBrightnessProfile brightnessProfile,
-                            uint8_t brightnessStep) {
+                            uint8_t fadeStep) {
   startWindowAnimation(kFadeSweep, frameDelayMs, maxLit, 255,
-                       brightnessProfile, brightnessStep);
+                       brightnessProfile, fadeStep);
 }
 
 void UfwLed::startComet(uint16_t frameDelayMs, size_t maxLit,
@@ -195,10 +177,6 @@ void UfwLed::update() {
   if (fadeFrameSettled()) {
     ++sweepStep_;
     refreshFadeTargets();
-    if (sweepStep_ > maxSweepStep() && fadeFrameSettled()) {
-      stopAnimation();
-      return;
-    }
   }
   stepFadeFrame();
   renderFadeFrame();
@@ -263,6 +241,22 @@ void UfwLed::resetBrightnessState() {
     currentBrightness_[i] = 0;
     targetBrightness_[i] = 0;
   }
+}
+
+void UfwLed::startFillAnimation(uint16_t stepDelayMs, size_t maxLit,
+                                uint8_t brightness,
+                                UfwBrightnessProfile brightnessProfile) {
+  stopAnimation();
+  animationMode_ = kFillSweep;
+  sweepStep_ = 0;
+  maxLit_ = maxLit;
+  stepDelayMs_ = stepDelayMs;
+  brightness_ = brightness;
+  brightnessProfile_ = brightnessProfile;
+  brightnessStep_ = 0;
+  lastStepMs_ = millis();
+  resetBrightnessState();
+  renderAnimationFrame();
 }
 
 void UfwLed::setAllTargets(uint8_t brightness) {

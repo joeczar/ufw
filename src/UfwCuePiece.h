@@ -26,6 +26,7 @@ class UfwCuePiece {
   bool isFinished() const;
 
  private:
+  bool isReady() const;
   void buildPlayOrder();
   bool startCueAtOrderIndex(size_t index);
   bool startNextCue();
@@ -42,7 +43,6 @@ class UfwCuePiece {
   size_t playOrder_[MAX_CUES];
   size_t orderIndex_;
   int activeCueLedPin_;
-  bool audioReady_;
   bool started_;
   bool finished_;
   bool lastPlayingState_;

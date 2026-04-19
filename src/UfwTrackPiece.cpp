@@ -16,7 +16,6 @@ UfwTrackPiece::UfwTrackPiece(const char* name, const UfwSound* sounds,
       orderMode_(UFW_IN_ORDER),
       finishMode_(UFW_STOP_WHEN_DONE),
       orderIndex_(0),
-      audioReady_(false),
       started_(false),
       finished_(false),
       lastPlayingState_(false) {}
@@ -26,7 +25,6 @@ void UfwTrackPiece::begin(UfwAudio& audio, UfwLed& leds) {
   leds_ = &leds;
   phrasePlayer_.begin(leds);
   phrasePlayer_.setPhrase(onTrackStartPhrase_);
-  audioReady_ = true;
 }
 
 void UfwTrackPiece::shuffle() {
@@ -45,8 +43,12 @@ void UfwTrackPiece::repeatForever() {
   finishMode_ = UFW_REPEAT_FOREVER;
 }
 
+bool UfwTrackPiece::isReady() const {
+  return audio_ != nullptr && leds_ != nullptr;
+}
+
 bool UfwTrackPiece::start() {
-  if (!audioReady_ || soundCount_ == 0) {
+  if (!isReady() || soundCount_ == 0) {
     finished_ = true;
     return false;
   }
@@ -62,7 +64,7 @@ bool UfwTrackPiece::start() {
 void UfwTrackPiece::update() {
   phrasePlayer_.update();
 
-  if (!audioReady_ || finished_) {
+  if (!isReady() || finished_) {
     return;
   }
 

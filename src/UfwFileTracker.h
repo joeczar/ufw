@@ -14,12 +14,12 @@ class UfwFileTracker {
   void normalize(const char* name, char* normalized,
                  size_t normalizedSize) const;
   bool hasSeen(const char* normalizedName) const;
-  bool remember(const char* normalizedName);
+ bool remember(const char* normalizedName);
   uint16_t count() const;
 
  private:
-  char seen_names_[MAX_ENTRIES][MAX_NAME_LENGTH];
-  uint16_t seen_count_;
+  char seenNames_[MAX_ENTRIES][MAX_NAME_LENGTH];
+  uint16_t seenCount_;
 };
 
 #endif

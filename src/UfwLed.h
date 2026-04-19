@@ -81,6 +81,9 @@ class UfwLed {
   size_t maxSweepStep() const;
   uint8_t windowBrightness(size_t windowPosition) const;
   void resetBrightnessState();
+  void startFillAnimation(uint16_t stepDelayMs, size_t maxLit,
+                          uint8_t brightness,
+                          UfwBrightnessProfile brightnessProfile);
   void setAllTargets(uint8_t brightness);
   void startWindowAnimation(AnimationMode mode, uint16_t frameDelayMs,
                             size_t maxLit, uint8_t brightness,

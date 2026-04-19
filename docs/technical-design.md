@@ -79,6 +79,28 @@ A piece built from short sound-and-light units. It usually:
 
 `IFuckingHateMen` is the reference pattern for this kind of piece.
 
+### LED Animation Helper
+`UfwLed` is the low-level light engine used underneath phrases and direct LED
+tests.
+
+Current built-in animation vocabulary:
+
+- `fill sweep`
+- `fade sweep`
+- `comet`
+- `breathe`
+
+Rules for the LED helper:
+
+- all built-in animations must be non-blocking
+- sweep-style animations must support `maxLit`
+- sweep-style animations may use either scalar brightness or a brightness
+  profile array
+- brightness profile arrays are ordered from newest `head` LED to oldest
+  `tail` LED
+- direct LED examples should use `LedHardwareTest` as the reference teaching
+  surface
+
 ## Current Implementation Shape
 
 The library now exposes:
@@ -92,6 +114,16 @@ The library now exposes:
 - lightweight design-system types in `UfwTypes.h`
 
 The canonical examples should use the piece classes instead of rebuilding playback state by hand.
+
+The current `UfwLed` implementation uses a per-LED `currentBrightness ->
+targetBrightness` model. That means new animations should usually be built by:
+
+1. deciding target brightness for each LED
+2. stepping current brightness toward those targets
+3. rendering in `update()`
+
+New LED patterns should extend that shared model rather than adding blocking
+animation code to examples.
 
 ## Rules For Future Features
 

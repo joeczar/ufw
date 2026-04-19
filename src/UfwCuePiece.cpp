@@ -14,7 +14,6 @@ UfwCuePiece::UfwCuePiece(const char* name, const UfwCue* cues, size_t cueCount)
       finishMode_(UFW_REPEAT_FOREVER),
       orderIndex_(0),
       activeCueLedPin_(-1),
-      audioReady_(false),
       started_(false),
       finished_(false),
       lastPlayingState_(false) {}
@@ -22,7 +21,6 @@ UfwCuePiece::UfwCuePiece(const char* name, const UfwCue* cues, size_t cueCount)
 void UfwCuePiece::begin(UfwAudio& audio, UfwLed& leds) {
   audio_ = &audio;
   leds_ = &leds;
-  audioReady_ = true;
 }
 
 void UfwCuePiece::shuffle() {
@@ -41,8 +39,12 @@ void UfwCuePiece::repeatForever() {
   finishMode_ = UFW_REPEAT_FOREVER;
 }
 
+bool UfwCuePiece::isReady() const {
+  return audio_ != nullptr && leds_ != nullptr;
+}
+
 bool UfwCuePiece::start() {
-  if (!audioReady_ || cueCount_ == 0) {
+  if (!isReady() || cueCount_ == 0) {
     finished_ = true;
     return false;
   }
@@ -57,7 +59,7 @@ bool UfwCuePiece::start() {
 }
 
 void UfwCuePiece::update() {
-  if (!audioReady_ || finished_) {
+  if (!isReady() || finished_) {
     return;
   }
 

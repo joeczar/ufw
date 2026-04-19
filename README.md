@@ -84,8 +84,30 @@ Ufw/
 
 - `FirstLed` is the smallest single-LED sanity-check sketch.
 - `LedHardwareTest` is the LED-only helper example and bench test.
+  It now demonstrates the full LED animation set:
+  `fill sweep`, `window sweep`, `fade sweep`, `comet`, and `breathe`.
 - `AudioPlayerTest` is the DFPlayer-only helper example and bench test.
 - `LibrarySmokeTest` is a quick LED + audio integration example.
 - `RememberThisOneTime` is the canonical track-based piece example.
 - `IFuckingHateMen` is the canonical cue-based piece example.
 - `UfwAudio`, `UfwLed`, and `UfwFileTracker` are implementation-level helpers. The examples and docs are the main authoring surface for new pieces.
+
+## LED Animation Surface
+
+If you are working directly with `UfwLed`, the current built-in animation helpers are:
+
+- `startFillSweep(...)`
+- `startFadeSweep(...)`
+- `startComet(...)`
+- `startBreathe(...)`
+- `startBreatheOnce(...)`
+- `startBreatheCount(...)`
+
+The LED helpers are all non-blocking. Start an animation once, then keep calling
+`leds.update()` from `loop()`.
+
+For sweep-style animations:
+
+- `maxLit` controls how many LEDs may be active at once
+- brightness can be one number or a brightness profile array
+- brightness profile arrays run from newest `head` LED to oldest `tail` LED

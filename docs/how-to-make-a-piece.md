@@ -137,3 +137,34 @@ The easiest way to stay organized is:
 - use `AudioPlayerTest` when you want to test only the DFPlayer helper
 - use `RememberThisOneTime` as the starting point for poem-style pieces
 - use `IFuckingHateMen` as the starting point for cue-style pieces
+
+## LED Helper Notes
+
+If you are working on the light behavior by itself, `LedHardwareTest` is the
+reference example.
+
+It demonstrates these built-in `UfwLed` animations:
+
+- `startFillSweep(...)`
+  - hard-edged sweep
+- `startFadeSweep(...)`
+  - soft moving window where LEDs fade toward their next brightness target
+- `startComet(...)`
+  - moving bright head with a dimmer tail
+- `startBreathe(...)`
+  - looping all-LED pulse
+- `startBreatheOnce(...)`
+  - one full in-and-out breath
+- `startBreatheCount(...)`
+  - a chosen number of breaths
+
+For sweep-style animations:
+
+- `maxLit` means the maximum number of LEDs active at once
+- brightness can be one number such as `180`
+- or a brightness profile array such as `{255, 120, 40}`
+- profile arrays describe the moving window from newest `head` LED to oldest
+  `tail` LED
+
+All of these helpers are non-blocking. In a sketch, you start the animation
+once, then keep calling `leds.update()` in `loop()`.
