@@ -35,6 +35,11 @@ struct UfwCue {
   uint8_t ledPin;
 };
 
+struct UfwBrightnessProfile {
+  const uint8_t* levels;
+  size_t count;
+};
+
 template <typename T, size_t N>
 constexpr size_t ufwCountOf(const T (&)[N]) {
   return N;
