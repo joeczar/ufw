@@ -1,0 +1,91 @@
+# Ufw Arduino Library
+
+This repo is now a standard Arduino library named `Ufw`.
+
+The goal is to give you one reusable library that can be installed once and updated in one place while multiple sketches keep using it.
+
+## Design Docs
+
+- Technical design: [docs/technical-design.md](/Users/hailmary/Code/personal/ufw/docs/technical-design.md)
+- User guide: [docs/how-to-make-a-piece.md](/Users/hailmary/Code/personal/ufw/docs/how-to-make-a-piece.md)
+
+## Install For Arduino IDE
+
+Clone or copy this repo into your Arduino sketchbook's `libraries` folder as `Ufw`:
+
+```text
+~/Documents/Arduino/libraries/Ufw
+```
+
+On this machine that would usually be:
+
+```text
+/Users/hailmary/Documents/Arduino/libraries/Ufw
+```
+
+After restarting Arduino IDE, the examples should appear under:
+
+`File -> Examples -> Ufw`
+
+## Update Workflow
+
+The clean update story is:
+
+1. Keep one source of truth in this repo.
+2. Install it once as the `Ufw` library.
+3. When you change the library, update that one installed copy.
+4. All sketches using `#include <Ufw.h>` get the new behavior.
+
+If the installed copy is a git clone, updating is just:
+
+```bash
+git pull
+```
+
+## Library Layout
+
+```text
+Ufw/
+  docs/
+    technical-design.md
+    how-to-make-a-piece.md
+  library.properties
+  src/
+    Ufw.h
+    UfwAudio.h
+    UfwAudio.cpp
+    UfwTypes.h
+    UfwLed.h
+    UfwLed.cpp
+  examples/
+    FirstLed/
+      FirstLed.ino
+    LedHardwareTest/
+      LedHardwareTest.ino
+    AudioPlayerTest/
+      AudioPlayerTest.ino
+    LibrarySmokeTest/
+      LibrarySmokeTest.ino
+    RememberThisOneTime/
+      RememberThisOneTime.ino
+    IFuckingHateMen/
+      IFuckingHateMen.ino
+```
+
+## Example Workflow For Your Friend
+
+1. Install `Ufw` into the Arduino `libraries` folder.
+2. Open Arduino IDE.
+3. Open an example from `File -> Examples -> Ufw`.
+4. Use `Save As...` to create a new sketch.
+5. Edit only the sketch, not the library internals, unless you want to change shared behavior.
+
+## Notes
+
+- `FirstLed` is the smallest single-LED sanity-check sketch.
+- `LedHardwareTest` is the LED-only helper example and bench test.
+- `AudioPlayerTest` is the DFPlayer-only helper example and bench test.
+- `LibrarySmokeTest` is a quick LED + audio integration example.
+- `RememberThisOneTime` is the canonical track-based piece example.
+- `IFuckingHateMen` is the canonical cue-based piece example.
+- `UfwAudio`, `UfwLed`, and `UfwFileTracker` are implementation-level helpers. The examples and docs are the main authoring surface for new pieces.
