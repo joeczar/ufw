@@ -17,12 +17,6 @@ Clone or copy this repo into your Arduino sketchbook's `libraries` folder as `Uf
 ~/Documents/Arduino/libraries/Ufw
 ```
 
-On this machine that would usually be:
-
-```text
-/Users/hailmary/Documents/Arduino/libraries/Ufw
-```
-
 After restarting Arduino IDE, the examples should appear under:
 
 `File -> Examples -> Ufw`
