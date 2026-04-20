@@ -54,7 +54,7 @@ cue examples use the second form.
 The status LED (and the boot pulse) is a developer-facing signal and is off by
 default. Finished pieces installed in the world run dark. To turn it on for
 a debug sketch, pass `UfwRuntimeConfig{.devMode = true}` to `runtime.begin(...)`.
-`AudioStatusLed` and `LibrarySmokeTest` are the examples that enable dev mode.
+`AudioStatusLed` is the example that enables dev mode.
 
 The examples are split into two zones:
 

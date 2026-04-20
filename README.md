@@ -82,8 +82,6 @@ Ufw/
       CueShuffle.ino
     CueRepeat/
       CueRepeat.ino
-    LibrarySmokeTest/
-      LibrarySmokeTest.ino
     RememberThisOneTime/
       RememberThisOneTime.ino
     IFuckingHateMen/
@@ -119,7 +117,6 @@ Ufw/
 - `TwoCuesInOrder` is the same idea with two cues advancing automatically.
 - `CueShuffle` is the one-line diff that demonstrates `.shuffle()`.
 - `CueRepeat` is the one-line diff that demonstrates `.repeatForever()`.
-- `LibrarySmokeTest` is a quick LED + audio integration example (dev mode on).
 - `RememberThisOneTime` is the canonical track-based piece example.
 - `IFuckingHateMen` is the canonical cue-based piece example.
 - `UfwAudio`, `UfwLed`, and `UfwFileTracker` are implementation-level helpers. The examples and docs are the main authoring surface for new pieces.
@@ -153,7 +150,7 @@ config.devMode = true;
 runtime.begin("My Piece", config);
 ```
 
-`AudioStatusLed` and `LibrarySmokeTest` are the examples that enable dev mode.
+`AudioStatusLed` is the example that enables dev mode.
 
 ## LED Animation Surface
 
