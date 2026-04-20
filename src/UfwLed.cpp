@@ -100,19 +100,6 @@ void UfwLed::startFadeSweep(uint16_t frameDelayMs, size_t maxLit,
                        brightnessProfile, fadeStep);
 }
 
-void UfwLed::startComet(uint16_t frameDelayMs, size_t maxLit,
-                        uint8_t brightness, uint8_t fadeStep) {
-  startWindowAnimation(kComet, frameDelayMs, maxLit, brightness, {nullptr, 0},
-                       fadeStep);
-}
-
-void UfwLed::startComet(uint16_t frameDelayMs, size_t maxLit,
-                        UfwBrightnessProfile brightnessProfile,
-                        uint8_t fadeStep) {
-  startWindowAnimation(kComet, frameDelayMs, maxLit, 255, brightnessProfile,
-                       fadeStep);
-}
-
 void UfwLed::startBreathe(uint16_t frameDelayMs, uint8_t brightness,
                           uint8_t fadeStep) {
   startBreatheCommon(frameDelayMs, -1, brightness, fadeStep);
@@ -325,7 +312,7 @@ void UfwLed::refreshFadeTargets() {
 
   const size_t window = activeWindowSize();
   const size_t pinCount = managedAnimationPinCount();
-  if ((animationMode_ != kFadeSweep && animationMode_ != kComet) ||
+  if (animationMode_ != kFadeSweep ||
       pinCount == 0 || window == 0 || sweepStep_ > maxSweepStep()) {
     return;
   }

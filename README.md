@@ -60,8 +60,6 @@ Ufw/
       LedFillSweep.ino
     LedFadeSweep/
       LedFadeSweep.ino
-    LedComet/
-      LedComet.ino
     LedBreathe/
       LedBreathe.ino
     LedHardwareTest/
@@ -108,7 +106,6 @@ Ufw/
 - `LedFillSweep` shows how to start a sweep and how `maxLit` limits how many
   LEDs can be on at one time.
 - `LedFadeSweep` shows how to use a brightness profile with `startFadeSweep(...)`.
-- `LedComet` shows how to use `startComet(...)`.
 - `LedBreathe` shows the `startBreatheOnce(...)`, `startBreatheCount(...)`, and
   `startBreathe(...)` helpers together.
 - `LedHardwareTest` is the full `UfwLed` demo and hardware check.
@@ -164,7 +161,6 @@ If you are working directly with `UfwLed`, the current built-in animation helper
 
 - `startFillSweep(...)`
 - `startFadeSweep(...)`
-- `startComet(...)`
 - `startBreathe(...)`
 - `startBreatheOnce(...)`
 - `startBreatheCount(...)`

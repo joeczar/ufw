@@ -7,7 +7,6 @@
   - `startFillSweep(...)`
   - `startFillSweep(...)` with `maxLit`
   - `startFadeSweep(...)`
-  - `startComet(...)`
   - `startBreatheOnce(...)`
   - `startBreatheCount(...)`
   - `startBreathe(...)`
@@ -36,7 +35,6 @@ const int MAX_LIT_WINDOW = 3;
 
 const uint8_t LED_PINS[] = {2, 4, 5, 6, 7, 8, 9};
 const uint8_t FADE_TRAIL[] = {255, 120, 40};
-const uint8_t COMET_TRAIL[] = {255, 180, 80};
 
 UfwLed leds(LED_PINS);
 
@@ -80,14 +78,6 @@ void runFadeSweep() {
   leds.setStatus(true);
   leds.startFadeSweep(FADE_FRAME_MS, MAX_LIT_WINDOW, FADE_TRAIL,
                       FADE_BRIGHTNESS_STEP);
-  waitForAnimation();
-}
-
-void runComet() {
-  leds.clear();
-  leds.setStatus(true);
-  leds.startComet(FADE_FRAME_MS, MAX_LIT_WINDOW, COMET_TRAIL,
-                  FADE_BRIGHTNESS_STEP);
   waitForAnimation();
 }
 
@@ -139,9 +129,6 @@ void loop() {
   pauseBetweenStages();
 
   runFadeSweep();
-  pauseBetweenStages();
-
-  runComet();
   pauseBetweenStages();
 
   runBreatheOnce();

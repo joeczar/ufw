@@ -43,18 +43,6 @@ class UfwLed {
     startFadeSweep(frameDelayMs, maxLit,
                    UfwBrightnessProfile{brightnessProfile, N}, fadeStep);
   }
-  void startComet(uint16_t frameDelayMs, size_t maxLit = 1,
-                  uint8_t brightness = 255, uint8_t fadeStep = 16);
-  void startComet(uint16_t frameDelayMs, size_t maxLit,
-                  UfwBrightnessProfile brightnessProfile,
-                  uint8_t fadeStep = 16);
-  template <size_t N>
-  void startComet(uint16_t frameDelayMs, size_t maxLit,
-                  const uint8_t (&brightnessProfile)[N],
-                  uint8_t fadeStep = 16) {
-    startComet(frameDelayMs, maxLit,
-               UfwBrightnessProfile{brightnessProfile, N}, fadeStep);
-  }
   void startBreathe(uint16_t frameDelayMs, uint8_t brightness = 255,
                     uint8_t fadeStep = 16);
   void startBreatheOnce(uint16_t frameDelayMs, uint8_t brightness = 255,
@@ -72,7 +60,6 @@ class UfwLed {
     kIdle,
     kFillSweep,
     kFadeSweep,
-    kComet,
     kBreathe,
   };
 

@@ -196,8 +196,6 @@ It demonstrates these built-in `UfwLed` animations:
   - hard-edged sweep
 - `startFadeSweep(...)`
   - soft moving window where LEDs fade toward their next brightness target
-- `startComet(...)`
-  - moving bright head with a dimmer tail
 - `startBreathe(...)`
   - looping all-LED pulse
 - `startBreatheOnce(...)`

@@ -87,7 +87,6 @@ Current built-in animation vocabulary:
 
 - `fill sweep`
 - `fade sweep`
-- `comet`
 - `breathe`
 
 Rules for the LED helper:
