@@ -68,6 +68,22 @@ Ufw/
       LedHardwareTest.ino
     AudioPlayerTest/
       AudioPlayerTest.ino
+    AudioPlayOne/
+      AudioPlayOne.ino
+    AudioStatusLed/
+      AudioStatusLed.ino
+    PhraseOnce/
+      PhraseOnce.ino
+    PhraseWithSound/
+      PhraseWithSound.ino
+    OneCue/
+      OneCue.ino
+    TwoCuesInOrder/
+      TwoCuesInOrder.ino
+    CueShuffle/
+      CueShuffle.ino
+    CueRepeat/
+      CueRepeat.ino
     LibrarySmokeTest/
       LibrarySmokeTest.ino
     RememberThisOneTime/
@@ -98,10 +114,50 @@ Ufw/
 - `LedHardwareTest` is the full `UfwLed` demo and hardware check.
   It exercises every configured LED pin and every built-in LED helper.
 - `AudioPlayerTest` is the minimal `runtime + track piece` DFPlayer bench test.
-- `LibrarySmokeTest` is a quick LED + audio integration example.
+- `AudioPlayOne` is the smallest audio example: boot, play one track, stop.
+- `AudioStatusLed` adds the status LED reflecting playback (enables dev mode).
+- `PhraseOnce` runs a `UfwPhrase` once at boot with no audio.
+- `PhraseWithSound` runs a phrase alongside one track (the atom `RememberThisOneTime` scales up).
+- `OneCue` is the smallest possible `UfwCuePiece`: one sound, one LED, plays once.
+- `TwoCuesInOrder` is the same idea with two cues advancing automatically.
+- `CueShuffle` is the one-line diff that demonstrates `.shuffle()`.
+- `CueRepeat` is the one-line diff that demonstrates `.repeatForever()`.
+- `LibrarySmokeTest` is a quick LED + audio integration example (dev mode on).
 - `RememberThisOneTime` is the canonical track-based piece example.
 - `IFuckingHateMen` is the canonical cue-based piece example.
 - `UfwAudio`, `UfwLed`, and `UfwFileTracker` are implementation-level helpers. The examples and docs are the main authoring surface for new pieces.
+
+## Choosing A Runtime Shape
+
+`UfwRuntime` has three forms. Pick the smallest one your sketch actually needs:
+
+```cpp
+// Audio only. No LEDs at all.
+UfwRuntime runtime(Serial1);
+
+// Audio + a single status LED. No phrase/cue LEDs.
+UfwRuntime runtime(Serial1, STATUS_LED_PIN);
+
+// Audio + animation LEDs (phrase or cue pins) + status LED.
+UfwRuntime runtime(Serial1, LED_PINS, STATUS_LED_PIN);
+```
+
+If a piece has no LEDs, don't declare any.
+
+## Dev Mode (Status LED)
+
+The status LED (and the boot pulse) is a developer-facing signal, so it is off
+by default. Finished pieces installed in the world run dark.
+
+To turn it on in your own sketch, pass a config to `runtime.begin(...)`:
+
+```cpp
+UfwRuntimeConfig config;
+config.devMode = true;
+runtime.begin("My Piece", config);
+```
+
+`AudioStatusLed` and `LibrarySmokeTest` are the examples that enable dev mode.
 
 ## LED Animation Surface
 
