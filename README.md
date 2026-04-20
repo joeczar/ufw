@@ -54,6 +54,16 @@ Ufw/
   examples/
     FirstLed/
       FirstLed.ino
+    LedSetPin/
+      LedSetPin.ino
+    LedFillSweep/
+      LedFillSweep.ino
+    LedFadeSweep/
+      LedFadeSweep.ino
+    LedComet/
+      LedComet.ino
+    LedBreathe/
+      LedBreathe.ino
     LedHardwareTest/
       LedHardwareTest.ino
     AudioPlayerTest/
@@ -77,10 +87,17 @@ Ufw/
 ## Notes
 
 - `FirstLed` is the smallest single-LED sanity-check sketch.
-- `LedHardwareTest` is the LED-only helper example and bench test.
-  It now demonstrates the full LED animation set:
-  `fill sweep`, `window sweep`, `fade sweep`, `comet`, and `breathe`.
-- `AudioPlayerTest` is the DFPlayer-only helper example and bench test.
+- `LedSetPin` is the first direct `UfwLed` example. It shows how to turn on a
+  specific LED pin.
+- `LedFillSweep` shows how to start a sweep and how `maxLit` limits how many
+  LEDs can be on at one time.
+- `LedFadeSweep` shows how to use a brightness profile with `startFadeSweep(...)`.
+- `LedComet` shows how to use `startComet(...)`.
+- `LedBreathe` shows the `startBreatheOnce(...)`, `startBreatheCount(...)`, and
+  `startBreathe(...)` helpers together.
+- `LedHardwareTest` is the full `UfwLed` demo and hardware check.
+  It exercises every configured LED pin and every built-in LED helper.
+- `AudioPlayerTest` is the minimal `runtime + track piece` DFPlayer bench test.
 - `LibrarySmokeTest` is a quick LED + audio integration example.
 - `RememberThisOneTime` is the canonical track-based piece example.
 - `IFuckingHateMen` is the canonical cue-based piece example.
