@@ -1,109 +1,78 @@
 /*
   AudioPlayerTest
 
-  This is a direct `UfwAudio` example and hardware test.
-  Use it when you want to verify the DFPlayer by itself without involving
-  LED phrases or piece classes.
+  This is a minimal track-based DFPlayer bench test.
+  It uses the same `UfwRuntime` + `UfwTrackPiece` setup style as
+  `RememberThisOneTime`, but keeps the authoring surface focused on checking
+  audio playback.
 
   What it shows:
-  - how to create a `UfwAudio` object directly
-  - how to start the DFPlayer
-  - how to play one track
-  - how to detect when a track has finished
+  - how to boot the board with `UfwRuntime`
+  - how to define one or more test tracks with `UfwSound`
+  - how to let `UfwTrackPiece` handle repeat/stop behavior
+  - how to log DFPlayer status while the piece runs
 
   Edit:
-  - `TEST_TRACK` to choose which DFPlayer track to play
-  - `REPEAT_TEST_TRACK` if you want it to replay automatically
+  - `TEST_TRACKS` to choose which DFPlayer tracks to play
+  - `REPEAT_TEST_TRACKS` if you want the list to loop automatically
 */
 
 #include <Ufw.h>
 
 // --- Hardware settings: change these only if your board is different. ---
-const int USB_BAUD = 115200;
-const int PLAYER_BAUD = 115200;
-const int STARTUP_VOLUME = 20;
-const int TEST_TRACK = 1;
+const int STATUS_LED_PIN = 10;
 const int STATUS_PERIOD_MS = 1000;
-const int TRACK_GAP_MS = 500;
-const bool REPEAT_TEST_TRACK = true;
+const bool REPEAT_TEST_TRACKS = true;
 
-// --- Library object: using the audio helper on its own. ---
-UfwAudio audio(Serial1);
-bool audio_ready = false;
-bool track_started = false;
-bool last_playing_state = false;
+// --- Edit here: choose which tracks to test. ---
+UfwSound TEST_TRACKS[] = {
+  {"test track", 1},
+};
+
+// --- Library objects: you usually do not need to edit below this line. ---
+UfwRuntime runtime(Serial1, nullptr, 0, STATUS_LED_PIN);
+UfwTrackPiece piece("Audio Player Test", TEST_TRACKS);
 uint32_t last_status_ms = 0;
 
-bool startTestTrack() {
-  Serial.print("Starting test track ");
-  Serial.println(TEST_TRACK);
-
-  if (!audio.playFileNum(TEST_TRACK, &Serial)) {
-    return false;
+void maybeLogStatus() {
+  if (millis() - last_status_ms < STATUS_PERIOD_MS) {
+    return;
   }
 
-  track_started = true;
-  last_playing_state = true;
-  return true;
-}
-
-void logStatus() {
+  last_status_ms = millis();
   Serial.print("Playing: ");
-  Serial.println(audio.isPlaying() ? "yes" : "no");
+  Serial.println(runtime.audio().isPlaying() ? "yes" : "no");
 
   Serial.print("Current track number: ");
-  Serial.println(audio.getCurFileNumber());
+  Serial.println(runtime.audio().getCurFileNumber());
 
   Serial.print("Elapsed / total (s): ");
-  Serial.print(audio.getCurTime());
+  Serial.print(runtime.audio().getCurTime());
   Serial.print(" / ");
-  Serial.println(audio.getTotalTime());
+  Serial.println(runtime.audio().getTotalTime());
 }
 
 void setup() {
-  // `setup()` runs once. Start serial first so you can read debug output.
-  Serial.begin(USB_BAUD);
-  delay(1500);
-  Serial.println();
-  Serial.println("=== Audio Player Test ===");
-
-  // Start the DFPlayer on Serial1.
-  if (!audio.begin(PLAYER_BAUD, Serial, STARTUP_VOLUME)) {
+  // `runtime.begin()` handles serial, LED boot setup, and DFPlayer startup.
+  if (!runtime.begin("Audio Player Test")) {
     Serial.println("DFPlayer failed to initialize.");
     return;
   }
-  audio_ready = true;
 
   Serial.print("Total files reported by DFPlayer: ");
-  Serial.println(audio.getTotalFile());
+  Serial.println(runtime.audio().getTotalFile());
 
-  startTestTrack();
+  piece.begin(runtime.audio(), runtime.leds());
+  piece.inOrder();
+  if (REPEAT_TEST_TRACKS) {
+    piece.repeatForever();
+  } else {
+    piece.stopWhenDone();
+  }
+  piece.start();
 }
 
 void loop() {
-  if (!audio_ready) {
-    return;
-  }
-
-  // Print a status line every second so you can see what the player is doing.
-  if (millis() - last_status_ms >= STATUS_PERIOD_MS) {
-    last_status_ms = millis();
-    logStatus();
-  }
-
-  const bool is_playing = audio.isPlaying();
-
-  // Detect the moment when the test track finishes.
-  if (track_started && last_playing_state && !is_playing) {
-    Serial.println("Test track finished.");
-    audio.pause(&Serial);
-    delay(TRACK_GAP_MS);
-
-    if (REPEAT_TEST_TRACK) {
-      startTestTrack();
-      return;
-    }
-  }
-
-  last_playing_state = is_playing;
+  piece.update();
+  maybeLogStatus();
 }
