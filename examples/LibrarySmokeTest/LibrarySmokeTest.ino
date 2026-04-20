@@ -19,6 +19,8 @@ uint32_t last_sweep_ms = 0;
 
 void setup() {
   leds.begin();
+  // Smoke test is a dev-time sketch: show the status LED and boot pulse.
+  leds.setDevMode(true);
   leds.pulseBootPattern();
 
   Serial.begin(USB_BAUD);

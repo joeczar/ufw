@@ -6,6 +6,7 @@ UfwLed::UfwLed(const uint8_t* animationPins, size_t animationPinCount,
       animationPinCount_(animationPinCount),
       statusPin_(statusPin),
       builtinPin_(builtinPin),
+      devMode_(false),
       animationMode_(kIdle),
       sweepStep_(0),
       maxLit_(0),
@@ -51,10 +52,23 @@ void UfwLed::setPin(uint8_t pin, bool on) {
 }
 
 void UfwLed::setStatus(bool on) {
+  if (!devMode_) {
+    return;
+  }
   writeStatusPins(on);
 }
 
+void UfwLed::setDevMode(bool on) {
+  devMode_ = on;
+  if (!devMode_) {
+    writeStatusPins(false);
+  }
+}
+
 void UfwLed::pulseBootPattern(uint8_t pulses, uint16_t onMs, uint16_t offMs) {
+  if (!devMode_) {
+    return;
+  }
   for (uint8_t i = 0; i < pulses; ++i) {
     writeStatusPins(true);
     delay(onMs);

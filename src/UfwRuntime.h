@@ -15,10 +15,21 @@ struct UfwRuntimeConfig {
   uint8_t bootPulses = 3;
   uint16_t bootOnMs = 100;
   uint16_t bootOffMs = 100;
+  bool devMode = false;
 };
 
 class UfwRuntime {
  public:
+  // Audio only: no animation pins, no status LED, no builtin LED.
+  // Use for pure-audio sketches that drive no LEDs at all.
+  explicit UfwRuntime(HardwareSerial& playerSerial);
+
+  // Audio + status LED only: no animation pins.
+  // Use for sketches that need the debug status LED but no phrase/cue LEDs.
+  UfwRuntime(HardwareSerial& playerSerial, int statusLedPin,
+             int builtinPin = -1);
+
+  // Full: animation LED pins + status LED + optional builtin LED.
   UfwRuntime(HardwareSerial& playerSerial, const uint8_t* ledPins,
              size_t ledPinCount, int statusLedPin = 10,
              int builtinPin = LED_BUILTIN);
