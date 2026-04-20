@@ -20,24 +20,21 @@ struct UfwRuntimeConfig {
 
 class UfwRuntime {
  public:
-  // Audio only: no animation pins, no status LED, no builtin LED.
-  // Use for pure-audio sketches that drive no LEDs at all.
+  // Audio only, no phrase/cue LEDs. The board's built-in LED serves as the
+  // status indicator (driven only when dev mode is on).
   explicit UfwRuntime(HardwareSerial& playerSerial);
 
-  // Audio + status LED only: no animation pins.
-  // Use for sketches that need the debug status LED but no phrase/cue LEDs.
-  UfwRuntime(HardwareSerial& playerSerial, int statusLedPin,
-             int builtinPin = -1);
-
-  // Full: animation LED pins + status LED + optional builtin LED.
+  // Audio + animation LED pins (phrase or cue LEDs). The built-in LED is
+  // the status indicator; the optional externalStatusPin lets an existing
+  // sketch keep driving an additional LED if its wiring has one.
   UfwRuntime(HardwareSerial& playerSerial, const uint8_t* ledPins,
-             size_t ledPinCount, int statusLedPin = 10,
+             size_t ledPinCount, int externalStatusPin = -1,
              int builtinPin = LED_BUILTIN);
 
   template <size_t N>
   UfwRuntime(HardwareSerial& playerSerial, const uint8_t (&ledPins)[N],
-             int statusLedPin = 10, int builtinPin = LED_BUILTIN)
-      : UfwRuntime(playerSerial, ledPins, N, statusLedPin, builtinPin) {}
+             int externalStatusPin = -1, int builtinPin = LED_BUILTIN)
+      : UfwRuntime(playerSerial, ledPins, N, externalStatusPin, builtinPin) {}
 
   bool begin(const char* title,
              const UfwRuntimeConfig& config = UfwRuntimeConfig());

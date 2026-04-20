@@ -115,7 +115,7 @@ Ufw/
   It exercises every configured LED pin and every built-in LED helper.
 - `AudioPlayerTest` is the minimal `runtime + track piece` DFPlayer bench test.
 - `AudioPlayOne` is the smallest audio example: boot, play one track, stop.
-- `AudioStatusLed` adds the status LED reflecting playback (enables dev mode).
+- `AudioStatusLed` adds `LED_BUILTIN` mirroring playback (enables dev mode).
 - `PhraseOnce` runs a `UfwPhrase` once at boot with no audio.
 - `PhraseWithSound` runs a phrase alongside one track (the atom `RememberThisOneTime` scales up).
 - `OneCue` is the smallest possible `UfwCuePiece`: one sound, one LED, plays once.
@@ -129,20 +129,19 @@ Ufw/
 
 ## Choosing A Runtime Shape
 
-`UfwRuntime` has three forms. Pick the smallest one your sketch actually needs:
+`UfwRuntime` has two forms. Pick the one that matches your sketch:
 
 ```cpp
-// Audio only. No LEDs at all.
+// Audio only. No phrase/cue LEDs. LED_BUILTIN is the status indicator.
 UfwRuntime runtime(Serial1);
 
-// Audio + a single status LED. No phrase/cue LEDs.
-UfwRuntime runtime(Serial1, STATUS_LED_PIN);
-
-// Audio + animation LEDs (phrase or cue pins) + status LED.
-UfwRuntime runtime(Serial1, LED_PINS, STATUS_LED_PIN);
+// Audio + animation LEDs (phrase or cue pins). LED_BUILTIN is still the
+// status indicator.
+UfwRuntime runtime(Serial1, LED_PINS);
 ```
 
-If a piece has no LEDs, don't declare any.
+In both forms the board's built-in LED serves as the status LED, and is only
+driven when dev mode is on (see below).
 
 ## Dev Mode (Status LED)
 

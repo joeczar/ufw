@@ -16,7 +16,6 @@
 #include <Ufw.h>
 
 // --- Hardware settings: change these only if your board or wiring is different. ---
-const int STATUS_LED_PIN = 10;
 const uint8_t CUE_LED_PINS[] = {2, 4};
 
 // --- Edit here: the cues to repeat forever. ---
@@ -26,7 +25,7 @@ UfwCue CUES[] = {
 };
 
 // --- Library objects: you usually do not need to edit below this line. ---
-UfwRuntime runtime(Serial1, CUE_LED_PINS, STATUS_LED_PIN);
+UfwRuntime runtime(Serial1, CUE_LED_PINS);
 UfwCuePiece piece("Cue Repeat", CUES);
 
 void setup() {

@@ -11,21 +11,20 @@
 
   Edit:
   - `LED_PINS` if your LEDs use different GPIO pins
-  - `STATUS_LED_PIN` if your status LED is on a different pin
   - `HOLD_MS` if you want each LED to stay on for longer or shorter
 */
 
 #include <Ufw.h>
 
-const int STATUS_LED_PIN = 10;
 const int HOLD_MS = 700;
 
 const uint8_t LED_PINS[] = {2, 4, 5, 6, 7, 8, 9};
 
-UfwLed leds(LED_PINS, STATUS_LED_PIN);
+UfwLed leds(LED_PINS);
 
 void setup() {
   leds.begin();
+  leds.setDevMode(true);
   leds.clear();
   leds.pulseBootPattern();
 }

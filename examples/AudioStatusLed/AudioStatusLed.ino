@@ -1,8 +1,8 @@
 /*
   AudioStatusLed
 
-  One step above AudioPlayOne: a status LED reflects playback.
-  While the track is playing, the status LED is on. When it stops, the LED is off.
+  One step above AudioPlayOne: the board's built-in LED reflects playback.
+  While the track is playing, the built-in LED is on. When it stops, the LED is off.
 
   This is the one example that turns dev mode ON, because the status LED is a
   developer-facing signal. Finished pieces leave dev mode off so installations
@@ -10,15 +10,11 @@
 
   Edit:
   - TRACK_NUMBER
-  - STATUS_LED_PIN if your wiring is different
 
   You usually do not need to edit anything below the TRACK_NUMBER line.
 */
 
 #include <Ufw.h>
-
-// --- Hardware settings: change these only if your board or wiring is different. ---
-const int STATUS_LED_PIN = 10;
 
 // Rate-limit DFPlayer polls. isPlaying() is a UART round-trip, so polling it
 // every loop iteration floods the serial link and can corrupt playback commands.
@@ -28,7 +24,8 @@ const uint32_t STATUS_PERIOD_MS = 250;
 const uint16_t TRACK_NUMBER = 1;
 
 // --- Library objects: you usually do not need to edit below this line. ---
-UfwRuntime runtime(Serial1, STATUS_LED_PIN);
+// Audio-only runtime: no phrase/cue LEDs. LED_BUILTIN is the status LED.
+UfwRuntime runtime(Serial1);
 uint32_t last_status_ms = 0;
 
 void setup() {

@@ -18,8 +18,6 @@
 #include <Ufw.h>
 
 // --- Hardware settings: change these only if your board or wiring is different. ---
-const int STATUS_LED_PIN = 10;
-
 // Every LED pin referenced by any cue must appear in this list.
 const uint8_t CUE_LED_PINS[] = {2};
 
@@ -30,7 +28,7 @@ UfwCue CUES[] = {
 };
 
 // --- Library objects: you usually do not need to edit below this line. ---
-UfwRuntime runtime(Serial1, CUE_LED_PINS, STATUS_LED_PIN);
+UfwRuntime runtime(Serial1, CUE_LED_PINS);
 UfwCuePiece piece("One Cue", CUES);
 
 void setup() {

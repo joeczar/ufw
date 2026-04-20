@@ -12,14 +12,12 @@
 
   Edit:
   - `LED_PINS` if your LEDs use different GPIO pins
-  - `STATUS_LED_PIN` if your status LED is on a different pin
   - `BREATHE_BRIGHTNESS` if you want a dimmer or brighter breathe
   - `BREATHE_COUNT` if you want more or fewer counted breathes
 */
 
 #include <Ufw.h>
 
-const int STATUS_LED_PIN = 10;
 const int BREATHE_FRAME_MS = 20;
 const int BREATHE_BRIGHTNESS_STEP = 8;
 const int BREATHE_BRIGHTNESS = 180;
@@ -29,7 +27,7 @@ const int PAUSE_MS = 700;
 
 const uint8_t LED_PINS[] = {2, 4, 5, 6, 7, 8, 9};
 
-UfwLed leds(LED_PINS, STATUS_LED_PIN);
+UfwLed leds(LED_PINS);
 
 void waitForAnimation() {
   while (leds.isAnimating()) {
@@ -39,6 +37,7 @@ void waitForAnimation() {
 
 void setup() {
   leds.begin();
+  leds.setDevMode(true);
   leds.clear();
   leds.pulseBootPattern();
 }

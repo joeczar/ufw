@@ -2,17 +2,13 @@
 
 UfwRuntime::UfwRuntime(HardwareSerial& playerSerial)
     : audio_(playerSerial),
-      leds_(nullptr, 0, -1, -1) {}
-
-UfwRuntime::UfwRuntime(HardwareSerial& playerSerial, int statusLedPin,
-                       int builtinPin)
-    : audio_(playerSerial),
-      leds_(nullptr, 0, statusLedPin, builtinPin) {}
+      leds_(nullptr, 0, -1, LED_BUILTIN) {}
 
 UfwRuntime::UfwRuntime(HardwareSerial& playerSerial, const uint8_t* ledPins,
-                       size_t ledPinCount, int statusLedPin, int builtinPin)
+                       size_t ledPinCount, int externalStatusPin,
+                       int builtinPin)
     : audio_(playerSerial),
-      leds_(ledPins, ledPinCount, statusLedPin, builtinPin) {}
+      leds_(ledPins, ledPinCount, externalStatusPin, builtinPin) {}
 
 bool UfwRuntime::begin(const char* title, const UfwRuntimeConfig& config) {
   leds_.begin();

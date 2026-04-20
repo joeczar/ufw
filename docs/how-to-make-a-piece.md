@@ -37,15 +37,17 @@ builds up to.
 
 ## Choosing A Runtime Shape
 
-`UfwRuntime` has three forms. A piece should only declare the LEDs it actually
+`UfwRuntime` has two forms. A piece should only declare the LEDs it actually
 uses:
 
-- `UfwRuntime(Serial1)` - audio only, no LEDs at all
-- `UfwRuntime(Serial1, STATUS_LED_PIN)` - audio + one status LED
-- `UfwRuntime(Serial1, LED_PINS, STATUS_LED_PIN)` - audio + phrase/cue LEDs + status
+- `UfwRuntime(Serial1)` - audio only, no phrase/cue LEDs
+- `UfwRuntime(Serial1, LED_PINS)` - audio + phrase/cue LEDs
 
-`AudioPlayOne` is the audio-only rung. `AudioStatusLed` is the status-only rung.
-All phrase and cue examples use the full form.
+In both forms the board's `LED_BUILTIN` is the status LED and only lights when
+dev mode is on. You do not need to wire a separate status LED.
+
+`AudioPlayOne` and `AudioStatusLed` are the audio-only rungs. All phrase and
+cue examples use the second form.
 
 ## Dev Mode
 

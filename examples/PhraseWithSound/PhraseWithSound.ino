@@ -17,7 +17,6 @@
 #include <Ufw.h>
 
 // --- Hardware settings: change these only if your board or wiring is different. ---
-const int STATUS_LED_PIN = 10;
 const uint8_t PHRASE_LED_PINS[] = {2, 4, 5, 6};
 
 // --- Edit here: the sound and the phrase that runs alongside it. ---
@@ -37,7 +36,7 @@ UfwPhrase PHRASE = {
 };
 
 // --- Library objects: you usually do not need to edit below this line. ---
-UfwRuntime runtime(Serial1, PHRASE_LED_PINS, STATUS_LED_PIN);
+UfwRuntime runtime(Serial1, PHRASE_LED_PINS);
 UfwPhrasePlayer phrasePlayer;
 
 void setup() {
