@@ -15,8 +15,6 @@
 #include <Ufw.h>
 
 // --- Hardware settings: change these only if your board or wiring is different. ---
-const int STATUS_LED_PIN = 10;
-
 // These are the LED pins this piece is allowed to light.
 const uint8_t CUE_LED_PINS[] = {2, 4, 5, 6, 7, 8};
 
@@ -37,7 +35,7 @@ UfwCue CUES[] = {
 
 // --- Library objects: you usually do not need to edit below this line. ---
 // `runtime` owns the board boot setup, DFPlayer startup, and LED setup.
-UfwRuntime runtime(Serial1, CUE_LED_PINS, STATUS_LED_PIN);
+UfwRuntime runtime(Serial1, CUE_LED_PINS);
 // `piece` owns the cue order, repeat behavior, and cue-to-cue transitions.
 UfwCuePiece piece("I Fucking Hate Men", CUES);
 

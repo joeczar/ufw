@@ -16,7 +16,6 @@
 #include <Ufw.h>
 
 // --- Hardware settings: change these only if your board or wiring is different. ---
-const int STATUS_LED_PIN = 10;
 const int PHRASE_STEP_DELAY_MS = 120;
 
 // These are the LED pins available to the phrase player.
@@ -56,7 +55,7 @@ UfwPhrase REMEMBER_PHRASE = {
 
 // --- Library objects: you usually do not need to edit below this line. ---
 // `runtime` owns the board boot setup, DFPlayer startup, and LED setup.
-UfwRuntime runtime(Serial1, PHRASE_LED_PINS, STATUS_LED_PIN);
+UfwRuntime runtime(Serial1, PHRASE_LED_PINS);
 // `piece` owns the playback order and the start/stop behavior for the whole work.
 UfwTrackPiece piece("Remember This One Time", POEMS, &REMEMBER_PHRASE);
 

@@ -153,6 +153,12 @@ The public authoring surface should avoid exposing:
 - pin-timing hacks in examples
 - ad hoc piece-specific state machines when a reusable pattern would do
 
+Debug signals follow an opt-in pattern. The status LED and boot pulse on
+`UfwLed` are gated behind `setDevMode(bool)` (wired up through
+`UfwRuntimeConfig::devMode`) so finished pieces run dark by default. Future
+debug features should follow this shape: off by default, one config flag to
+enable, no effect on artistic content (animation pins, cue LEDs, phrase LEDs).
+
 ## Documentation Guidance
 
 - User-facing docs should teach `sounds`, `phrases`, `cues`, and piece types in plain language.

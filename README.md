@@ -6,8 +6,8 @@ The goal is to give you one reusable library that can be installed once and upda
 
 ## Design Docs
 
-- Technical design: [docs/technical-design.md](/Users/hailmary/Code/personal/ufw/docs/technical-design.md)
-- User guide: [docs/how-to-make-a-piece.md](/Users/hailmary/Code/personal/ufw/docs/how-to-make-a-piece.md)
+- Technical design: [docs/technical-design.md](docs/technical-design.md)
+- User guide: [docs/how-to-make-a-piece.md](docs/how-to-make-a-piece.md)
 
 ## Install For Arduino IDE
 
@@ -68,6 +68,22 @@ Ufw/
       LedHardwareTest.ino
     AudioPlayerTest/
       AudioPlayerTest.ino
+    AudioPlayOne/
+      AudioPlayOne.ino
+    AudioStatusLed/
+      AudioStatusLed.ino
+    PhraseOnce/
+      PhraseOnce.ino
+    PhraseWithSound/
+      PhraseWithSound.ino
+    OneCue/
+      OneCue.ino
+    TwoCuesInOrder/
+      TwoCuesInOrder.ino
+    CueShuffle/
+      CueShuffle.ino
+    CueRepeat/
+      CueRepeat.ino
     LibrarySmokeTest/
       LibrarySmokeTest.ino
     RememberThisOneTime/
@@ -98,10 +114,49 @@ Ufw/
 - `LedHardwareTest` is the full `UfwLed` demo and hardware check.
   It exercises every configured LED pin and every built-in LED helper.
 - `AudioPlayerTest` is the minimal `runtime + track piece` DFPlayer bench test.
-- `LibrarySmokeTest` is a quick LED + audio integration example.
+- `AudioPlayOne` is the smallest audio example: boot, play one track, stop.
+- `AudioStatusLed` adds `LED_BUILTIN` mirroring playback (enables dev mode).
+- `PhraseOnce` runs a `UfwPhrase` once at boot with no audio.
+- `PhraseWithSound` runs a phrase alongside one track (the atom `RememberThisOneTime` scales up).
+- `OneCue` is the smallest possible `UfwCuePiece`: one sound, one LED, plays once.
+- `TwoCuesInOrder` is the same idea with two cues advancing automatically.
+- `CueShuffle` is the one-line diff that demonstrates `.shuffle()`.
+- `CueRepeat` is the one-line diff that demonstrates `.repeatForever()`.
+- `LibrarySmokeTest` is a quick LED + audio integration example (dev mode on).
 - `RememberThisOneTime` is the canonical track-based piece example.
 - `IFuckingHateMen` is the canonical cue-based piece example.
 - `UfwAudio`, `UfwLed`, and `UfwFileTracker` are implementation-level helpers. The examples and docs are the main authoring surface for new pieces.
+
+## Choosing A Runtime Shape
+
+`UfwRuntime` has two forms. Pick the one that matches your sketch:
+
+```cpp
+// Audio only. No phrase/cue LEDs. LED_BUILTIN is the status indicator.
+UfwRuntime runtime(Serial1);
+
+// Audio + animation LEDs (phrase or cue pins). LED_BUILTIN is still the
+// status indicator.
+UfwRuntime runtime(Serial1, LED_PINS);
+```
+
+In both forms the board's built-in LED serves as the status LED, and is only
+driven when dev mode is on (see below).
+
+## Dev Mode (Status LED)
+
+The status LED (and the boot pulse) is a developer-facing signal, so it is off
+by default. Finished pieces installed in the world run dark.
+
+To turn it on in your own sketch, pass a config to `runtime.begin(...)`:
+
+```cpp
+UfwRuntimeConfig config;
+config.devMode = true;
+runtime.begin("My Piece", config);
+```
+
+`AudioStatusLed` and `LibrarySmokeTest` are the examples that enable dev mode.
 
 ## LED Animation Surface
 

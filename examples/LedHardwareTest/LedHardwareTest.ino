@@ -18,12 +18,10 @@
 
   Edit:
   - `LED_PINS` if your LEDs use different GPIO pins
-  - `STATUS_LED_PIN` if your status LED is on a different pin
 */
 
 #include <Ufw.h>
 
-const int STATUS_LED_PIN = 10;
 const int STEP_HOLD_MS = 500;
 const int SWEEP_STEP_MS = 120;
 const int FADE_FRAME_MS = 16;
@@ -40,7 +38,7 @@ const uint8_t LED_PINS[] = {2, 4, 5, 6, 7, 8, 9};
 const uint8_t FADE_TRAIL[] = {255, 120, 40};
 const uint8_t COMET_TRAIL[] = {255, 180, 80};
 
-UfwLed leds(LED_PINS, STATUS_LED_PIN);
+UfwLed leds(LED_PINS);
 
 void waitForAnimation() {
   while (leds.isAnimating()) {
@@ -125,6 +123,7 @@ void previewLoopingBreathe() {
 
 void setup() {
   leds.begin();
+  leds.setDevMode(true);
   leds.clear();
   leds.pulseBootPattern();
 }

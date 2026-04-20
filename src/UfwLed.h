@@ -18,6 +18,7 @@ class UfwLed {
   void clear();
   void setPin(uint8_t pin, bool on);
   void setStatus(bool on);
+  void setDevMode(bool on);
   void pulseBootPattern(uint8_t pulses = 3, uint16_t onMs = 100,
                         uint16_t offMs = 100);
   void startFillSweep(uint16_t stepDelayMs, size_t maxLit = 0,
@@ -104,6 +105,7 @@ class UfwLed {
   size_t animationPinCount_;
   int statusPin_;
   int builtinPin_;
+  bool devMode_;
   AnimationMode animationMode_;
   size_t sweepStep_;
   size_t maxLit_;

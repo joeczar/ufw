@@ -9,6 +9,53 @@
 
 You do not need to think about DFPlayer commands while writing a piece. Most of the time, you only edit the named lists near the top of an example.
 
+## Building Blocks Ladder
+
+Before jumping into a full piece, you can climb a ladder of small examples that
+teach one idea at a time. Each rung is ~30–50 lines and the diff to the next
+rung is usually a single line.
+
+Audio foundation:
+
+- `AudioPlayOne` - boot, play one track, stop
+- `AudioStatusLed` - same, plus a status LED that follows playback (dev mode)
+
+Phrase ladder (toward `RememberThisOneTime`):
+
+- `PhraseOnce` - a `UfwPhrase` runs once at boot with no audio
+- `PhraseWithSound` - the phrase runs alongside one track
+
+Cue ladder (toward `IFuckingHateMen`):
+
+- `OneCue` - one cue, plays once, stops
+- `TwoCuesInOrder` - two cues advance automatically in order
+- `CueShuffle` - one-line diff: `.shuffle()` instead of `.inOrder()`
+- `CueRepeat` - one-line diff: `.repeatForever()` instead of `.stopWhenDone()`
+
+`RememberThisOneTime` and `IFuckingHateMen` are the two full pieces the ladder
+builds up to.
+
+## Choosing A Runtime Shape
+
+`UfwRuntime` has two forms. A piece should only declare the LEDs it actually
+uses:
+
+- `UfwRuntime(Serial1)` - audio only, no phrase/cue LEDs
+- `UfwRuntime(Serial1, LED_PINS)` - audio + phrase/cue LEDs
+
+In both forms the board's `LED_BUILTIN` is the status LED and only lights when
+dev mode is on. You do not need to wire a separate status LED.
+
+`AudioPlayOne` and `AudioStatusLed` are the audio-only rungs. All phrase and
+cue examples use the second form.
+
+## Dev Mode
+
+The status LED (and the boot pulse) is a developer-facing signal and is off by
+default. Finished pieces installed in the world run dark. To turn it on for
+a debug sketch, pass `UfwRuntimeConfig{.devMode = true}` to `runtime.begin(...)`.
+`AudioStatusLed` and `LibrarySmokeTest` are the examples that enable dev mode.
+
 The examples are split into two zones:
 
 - `edit here`: the part you are expected to change for a new piece

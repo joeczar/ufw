@@ -3,7 +3,6 @@
 const int USB_BAUD = 115200;
 const int PLAYER_BAUD = 115200;
 const int STARTUP_VOLUME = 20;
-const int STATUS_LED_PIN = 3;
 const int ANIMATION_STEP_DELAY_MS = 120;
 const int STATUS_PERIOD_MS = 1000;
 const int SWEEP_PERIOD_MS = 3000;
@@ -12,13 +11,15 @@ const uint8_t LED_PINS[] = {2, 4, 5, 6, 7, 8};
 const size_t LED_PIN_COUNT = sizeof(LED_PINS) / sizeof(LED_PINS[0]);
 
 UfwAudio audio(Serial1);
-UfwLed leds(LED_PINS, LED_PIN_COUNT, STATUS_LED_PIN);
+UfwLed leds(LED_PINS, LED_PIN_COUNT);
 bool audio_ready = false;
 uint32_t last_status_ms = 0;
 uint32_t last_sweep_ms = 0;
 
 void setup() {
   leds.begin();
+  // Smoke test is a dev-time sketch: show the status LED and boot pulse.
+  leds.setDevMode(true);
   leds.pulseBootPattern();
 
   Serial.begin(USB_BAUD);

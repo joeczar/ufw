@@ -12,3 +12,4 @@ build/
 
 # VS Code local cache
 .vscode/ipch/
+.vscode/arduino.json

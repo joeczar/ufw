@@ -20,7 +20,6 @@
 #include <Ufw.h>
 
 // --- Hardware settings: change these only if your board is different. ---
-const int STATUS_LED_PIN = 10;
 const int STATUS_PERIOD_MS = 1000;
 const bool REPEAT_TEST_TRACKS = true;
 
@@ -30,7 +29,7 @@ UfwSound TEST_TRACKS[] = {
 };
 
 // --- Library objects: you usually do not need to edit below this line. ---
-UfwRuntime runtime(Serial1, nullptr, 0, STATUS_LED_PIN);
+UfwRuntime runtime(Serial1);
 UfwTrackPiece piece("Audio Player Test", TEST_TRACKS);
 uint32_t last_status_ms = 0;
 
@@ -53,8 +52,11 @@ void maybeLogStatus() {
 }
 
 void setup() {
-  // `runtime.begin()` handles serial, LED boot setup, and DFPlayer startup.
-  if (!runtime.begin("Audio Player Test")) {
+  // Bench test: light LED_BUILTIN to mirror DFPlayer playback state.
+  UfwRuntimeConfig config;
+  config.devMode = true;
+
+  if (!runtime.begin("Audio Player Test", config)) {
     Serial.println("DFPlayer failed to initialize.");
     return;
   }
