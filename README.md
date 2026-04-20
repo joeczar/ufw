@@ -52,8 +52,6 @@ Ufw/
     UfwLed.h
     UfwLed.cpp
   examples/
-    FirstLed/
-      FirstLed.ino
     LedSetPin/
       LedSetPin.ino
     LedFillSweep/
@@ -98,7 +96,6 @@ Ufw/
 
 ## Notes
 
-- `FirstLed` is the smallest single-LED sanity-check sketch.
 - `LedSetPin` is the first direct `UfwLed` example. It shows how to turn on a
   specific LED pin.
 - `LedFillSweep` shows how to start a sweep and how `maxLit` limits how many
@@ -123,7 +120,7 @@ Ufw/
 
 ## Choosing A Runtime Shape
 
-`UfwRuntime` has two forms. Pick the one that matches your sketch:
+`UfwRuntime` has three forms. Pick the one that matches your sketch:
 
 ```cpp
 // Audio only. No phrase/cue LEDs. LED_BUILTIN is the status indicator.
@@ -132,10 +129,23 @@ UfwRuntime runtime(Serial1);
 // Audio + animation LEDs (phrase or cue pins). LED_BUILTIN is still the
 // status indicator.
 UfwRuntime runtime(Serial1, LED_PINS);
+
+// LED-only. No DFPlayer. Standard boot sequence (LED setup, optional dev
+// mode, optional boot pulse, serial banner) runs without requiring audio
+// hardware. Use this for phrase or direct-LED pieces that do not play
+// sound. `runtime.audio()` is not usable with this shape.
+UfwRuntime runtime(LED_PINS);
 ```
 
-In both forms the board's built-in LED serves as the status LED, and is only
+In all forms the board's built-in LED serves as the status LED, and is only
 driven when dev mode is on (see below).
+
+**Portability note:** the LED-only form requires a global `Serial1` at link
+time (used as an inactive backing for the audio subsystem, which is never
+initialized in this mode). Works on RP2040/Pico, Mega, Leonardo, ESP32, and
+STM32. Boards without `Serial1` (Uno R3, classic Nano, 8-bit AVR) will not
+compile this constructor — on those boards use the other two forms or
+construct `UfwLed` directly.
 
 ## Dev Mode (Status LED)
 

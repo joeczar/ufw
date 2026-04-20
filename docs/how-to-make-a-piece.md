@@ -37,14 +37,21 @@ builds up to.
 
 ## Choosing A Runtime Shape
 
-`UfwRuntime` has two forms. A piece should only declare the LEDs it actually
-uses:
+`UfwRuntime` has three forms. A piece should only declare the parts it
+actually uses:
 
 - `UfwRuntime(Serial1)` - audio only, no phrase/cue LEDs
 - `UfwRuntime(Serial1, LED_PINS)` - audio + phrase/cue LEDs
+- `UfwRuntime(LED_PINS)` - LEDs only, no DFPlayer. Good for phrase pieces
+  that do not play sound. `runtime.audio()` is not usable with this shape.
 
-In both forms the board's `LED_BUILTIN` is the status LED and only lights when
+In all forms the board's `LED_BUILTIN` is the status LED and only lights when
 dev mode is on. You do not need to wire a separate status LED.
+
+The LED-only form requires a global `Serial1` to exist. That is true on the
+boards this library targets (RP2040/Pico, Mega, ESP32, etc.) but not on Uno
+R3 or 8-bit AVR. On those boards, construct `UfwLed` directly instead of
+using `UfwRuntime`.
 
 `AudioPlayOne` and `AudioStatusLed` are the audio-only rungs. All phrase and
 cue examples use the second form.

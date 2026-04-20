@@ -2,13 +2,21 @@
 
 UfwRuntime::UfwRuntime(HardwareSerial& playerSerial)
     : audio_(playerSerial),
-      leds_(nullptr, 0, -1, LED_BUILTIN) {}
+      leds_(nullptr, 0, -1, LED_BUILTIN),
+      audioEnabled_(true) {}
 
 UfwRuntime::UfwRuntime(HardwareSerial& playerSerial, const uint8_t* ledPins,
                        size_t ledPinCount, int externalStatusPin,
                        int builtinPin)
     : audio_(playerSerial),
-      leds_(ledPins, ledPinCount, externalStatusPin, builtinPin) {}
+      leds_(ledPins, ledPinCount, externalStatusPin, builtinPin),
+      audioEnabled_(true) {}
+
+UfwRuntime::UfwRuntime(const uint8_t* ledPins, size_t ledPinCount,
+                       int externalStatusPin, int builtinPin)
+    : audio_(Serial1),
+      leds_(ledPins, ledPinCount, externalStatusPin, builtinPin),
+      audioEnabled_(false) {}
 
 bool UfwRuntime::begin(const char* title, const UfwRuntimeConfig& config) {
   leds_.begin();
@@ -25,6 +33,10 @@ bool UfwRuntime::begin(const char* title, const UfwRuntimeConfig& config) {
     Serial.print("=== ");
     Serial.print(title);
     Serial.println(" ===");
+  }
+
+  if (!audioEnabled_) {
+    return true;
   }
 
   return audio_.begin(config.playerBaud, Serial, config.startupVolume);
