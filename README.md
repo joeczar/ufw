@@ -6,8 +6,8 @@ The goal is to give you one reusable library that can be installed once and upda
 
 ## Design Docs
 
-- Technical design: [docs/technical-design.md](/Users/hailmary/Code/personal/ufw/docs/technical-design.md)
-- User guide: [docs/how-to-make-a-piece.md](/Users/hailmary/Code/personal/ufw/docs/how-to-make-a-piece.md)
+- Technical design: [docs/technical-design.md](docs/technical-design.md)
+- User guide: [docs/how-to-make-a-piece.md](docs/how-to-make-a-piece.md)
 
 ## Install For Arduino IDE
 
