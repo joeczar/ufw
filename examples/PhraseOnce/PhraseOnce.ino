@@ -9,6 +9,9 @@
   PHRASE_STEPS block below straight into a track piece once you are happy with
   the pacing.
 
+  This example uses `UfwLed` and `UfwPhrasePlayer` directly, without
+  `UfwRuntime`, so it runs even when no DFPlayer is connected.
+
   Edit:
   - PHRASE_LED_PINS   (which LEDs the phrase is allowed to light)
   - PHRASE_STEPS      (the sequence of {pin, how long the LED stays on in ms})
@@ -40,16 +43,14 @@ UfwPhrase PHRASE = {
 };
 
 // --- Library objects: you usually do not need to edit below this line. ---
-UfwRuntime runtime(Serial1, PHRASE_LED_PINS);
+UfwLed leds(PHRASE_LED_PINS);
 UfwPhrasePlayer phrasePlayer;
 
 void setup() {
-  if (!runtime.begin("Phrase Once")) {
-    Serial.println("DFPlayer failed to initialize.");
-    return;
-  }
+  leds.begin();
+  leds.clear();
 
-  phrasePlayer.begin(runtime.leds());
+  phrasePlayer.begin(leds);
   phrasePlayer.setPhrase(&PHRASE);
   phrasePlayer.start();
 }
