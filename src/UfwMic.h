@@ -45,7 +45,7 @@ class UfwMic {
   bool hasReading_;
   UfwMicReading latest_;
   uint32_t windowStartedMs_;
-  uint32_t sampleSum_;
+  uint64_t sampleSum_;
   uint32_t sampleCount_;
   int windowMin_;
   int windowMax_;

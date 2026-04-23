@@ -57,7 +57,7 @@ bool UfwMic::update() {
     }
   }
 
-  sampleSum_ += static_cast<uint32_t>(lastRaw_);
+  sampleSum_ += static_cast<uint64_t>(lastRaw_);
   ++sampleCount_;
 
   const uint32_t nowMs = millis();

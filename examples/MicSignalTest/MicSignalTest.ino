@@ -29,7 +29,8 @@ const int USB_BAUD = 115200;
 const int MIC_PIN = 26;
 const uint16_t REPORT_INTERVAL_MS = 100;
 const size_t METER_WIDTH = 24;
-const int ADC_MAX = 4095;
+const uint8_t ADC_BITS = 12;
+const int ADC_MAX = (1 << ADC_BITS) - 1;
 
 UfwMic mic(MIC_PIN, REPORT_INTERVAL_MS);
 
@@ -70,14 +71,17 @@ void printWindowStats() {
 
 void setup() {
   Serial.begin(USB_BAUD);
+#if defined(ARDUINO_ARCH_RP2040)
   Serial.ignoreFlowControl(true);
+#endif
   delay(1500);
   Serial.println();
   Serial.println("=== Mic Signal Test ===");
-  Serial.println("Reading analog mic on GP26");
+  Serial.print("Reading analog mic on GP");
+  Serial.println(MIC_PIN);
   Serial.println("Columns: raw, center, min, max, p2p, samples");
 
-  mic.begin(12);
+  mic.begin(ADC_BITS);
 }
 
 void loop() {
