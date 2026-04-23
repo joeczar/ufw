@@ -48,6 +48,8 @@ Ufw/
     Ufw.h
     UfwAudio.h
     UfwAudio.cpp
+    UfwMic.h
+    UfwMic.cpp
     UfwTypes.h
     UfwLed.h
     UfwLed.cpp
@@ -62,6 +64,8 @@ Ufw/
       LedBreathe.ino
     LedHardwareTest/
       LedHardwareTest.ino
+    MicSignalTest/
+      MicSignalTest.ino
     AudioPlayerTest/
       AudioPlayerTest.ino
     AudioPlayOne/
@@ -105,6 +109,9 @@ Ufw/
   `startBreathe(...)` helpers together.
 - `LedHardwareTest` is the full `UfwLed` demo and hardware check.
   It exercises every configured LED pin and every built-in LED helper.
+- `MicSignalTest` is a Pico W analog microphone bench test.
+  It prints rolling Serial measurements for a mic on `GP26` so you can inspect
+  quiet bias, min/max swing, and peak-to-peak level before building triggers.
 - `AudioPlayerTest` is the minimal `runtime + track piece` DFPlayer bench test.
 - `AudioPlayOne` is the smallest audio example: boot, play one track, stop.
 - `AudioStatusLed` adds `LED_BUILTIN` mirroring playback (enables dev mode).
@@ -116,7 +123,8 @@ Ufw/
 - `CueRepeat` is the one-line diff that demonstrates `.repeatForever()`.
 - `RememberThisOneTime` is the canonical track-based piece example.
 - `IFuckingHateMen` is the canonical cue-based piece example.
-- `UfwAudio`, `UfwLed`, and `UfwFileTracker` are implementation-level helpers. The examples and docs are the main authoring surface for new pieces.
+- `UfwAudio`, `UfwLed`, `UfwMic`, and `UfwFileTracker` are implementation-level
+  helpers. The examples and docs are the main authoring surface for new pieces.
 
 ## Choosing A Runtime Shape
 
