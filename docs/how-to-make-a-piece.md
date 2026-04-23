@@ -135,8 +135,40 @@ This means:
 The easiest way to stay organized is:
 - use `LedHardwareTest` when you want to test only the LED helper
 - use `AudioPlayerTest` when you want to test only the DFPlayer helper
+- use `MicSignalTest` when you want to inspect an analog mic signal on Serial
+  before turning it into a reusable trigger
 - use `RememberThisOneTime` as the starting point for poem-style pieces
 - use `IFuckingHateMen` as the starting point for cue-style pieces
+
+## Mic Helper Notes
+
+If you are working on microphone input by itself, `MicSignalTest` is the
+reference example.
+
+It demonstrates the low-level `UfwMic` helper:
+
+```cpp
+UfwMic mic(26, 100);
+
+void setup() {
+  Serial.begin(115200);
+  mic.begin(12);
+}
+
+void loop() {
+  if (mic.update()) {
+    Serial.println(mic.peakToPeak());
+  }
+}
+```
+
+This means:
+- `26` is the analog input pin
+- `100` is the measurement window in milliseconds
+- `update()` should be called as often as possible in `loop()`
+- when `update()` returns `true`, one full window is ready to inspect
+- `peakToPeak()` is the easiest loudness number to tune against first
+- `center()` helps you see the mic's quiet bias level
 
 ## LED Helper Notes
 

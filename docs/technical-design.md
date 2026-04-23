@@ -5,7 +5,7 @@
 ## Design Rules
 
 1. Keep the system layered.
-   - `hardware adapters`: direct board and device wrappers such as `UfwAudio` and `UfwLed`
+   - `hardware adapters`: direct board and device wrappers such as `UfwAudio`, `UfwLed`, and `UfwMic`
    - `assets`: named reusable content such as sounds, phrases, and cues
    - `patterns`: ordering and repetition rules such as `shuffle`, `repeat`, `stop`, and `once`
    - `pieces`: a specific artwork built from assets plus patterns
@@ -101,12 +101,33 @@ Rules for the LED helper:
 - direct LED examples should use `LedHardwareTest` as the reference teaching
   surface
 
+### Microphone Helper
+`UfwMic` is the low-level analog microphone helper.
+
+It measures rolling windows and exposes:
+
+- last raw reading
+- rolling minimum and maximum
+- estimated center bias
+- peak-to-peak swing
+- sample count per window
+
+Rules for the microphone helper:
+
+- it must stay non-blocking and update-driven
+- it should expose stable windowed measurements instead of only one-shot raw reads
+- higher-level threshold, clap, or envelope triggers should build on `UfwMic`
+  instead of bypassing it
+- direct mic examples should use `MicSignalTest` as the reference teaching
+  surface
+
 ## Current Implementation Shape
 
 The library now exposes:
 
 - `UfwAudio`
 - `UfwLed`
+- `UfwMic`
 - `UfwFileTracker`
 - `UfwPhrasePlayer`
 - `UfwTrackPiece`
@@ -132,6 +153,7 @@ When adding a new capability, decide which layer it belongs to.
 Examples:
 - NFC tag start/selection: `trigger`
 - capacitive touch advance/restart: `trigger`
+- microphone threshold/clap detection: `trigger` built on `UfwMic`
 - LED matrix word display: `output` or `phrase` extension
 - alternate playback orders: `pattern`
 - named groups of sounds: `asset`

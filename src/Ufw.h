@@ -5,6 +5,7 @@
 #include "UfwCuePiece.h"
 #include "UfwFileTracker.h"
 #include "UfwLed.h"
+#include "UfwMic.h"
 #include "UfwPhrasePlayer.h"
 #include "UfwRuntime.h"
 #include "UfwTrackPiece.h"
